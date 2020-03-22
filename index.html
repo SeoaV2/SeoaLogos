@@ -4,38 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    window.addEventListener('load',()=>{
-      let props=document.getElementsByClassName('prop')
+    window.addEventListener('load', () => {
+      document.getElementById('save').addEventListener('click', save)
+      const props = document.getElementsByClassName('prop')
       for (let i = 0; i < props.length; i++) {
-        props[i].addEventListener('change',()=>draw())
+        props[i].addEventListener('change', () => draw())
       }
       draw()
     })
-    function draw(){
-      //점 위치 측정방법: 캔버스에 내접하는 원이 있다고 생각하고, 그 원 내부에 정삼각형을 그리는데, 이때의 크기가 100%, 캔버스 y축과 삼각형의 첫 꼭짓점 사이의 각도: 40도
-      //하지만 그러면 약간 치우쳐서 보정해줌 
-      let ctx = document.getElementById('c').getContext('2d')
-      let width=parseInt(document.getElementById('size').value)
-      let triangleSize=parseInt(document.getElementById('triangleSize').value)
-      document.getElementById('c').width=width
-      document.getElementById('c').height=width
-      ctx.fillStyle=document.getElementById('bg').value
-      ctx.fillRect(0,0,width,width)
-      let r = 1/2*width*triangleSize/100
-      let bojungX=0.05,bojungY=-0.025
-      ctx.lineCap = "round"
-      ctx.moveTo((1/2+bojungX)*width+r*Math.cos(50*Math.PI/180),(1/2+bojungY)*width-r*Math.sin(50*Math.PI/180))
-      ctx.lineTo((1/2+bojungX)*width+r*Math.cos(70*Math.PI/180),(1/2+bojungY)*width+r*Math.sin(70*Math.PI/180))
-      ctx.moveTo((1/2+bojungX)*width+r*Math.cos(70*Math.PI/180),(1/2+bojungY)*width+r*Math.sin(70*Math.PI/180))
-      ctx.lineTo((1/2+bojungX)*width-r*Math.sin(80*Math.PI/180),(1/2+bojungY)*width-r*Math.cos(80*Math.PI/180))
-      ctx.moveTo((1/2+bojungX)*width-r*Math.sin(80*Math.PI/180),(1/2+bojungY)*width-r*Math.cos(80*Math.PI/180))
-      ctx.lineTo((1/2+bojungX)*width+r*Math.cos(50*Math.PI/180),(1/2+bojungY)*width-r*Math.sin(50*Math.PI/180))
+
+    function draw () {
+      // 점 위치 측정방법: 캔버스에 내접하는 원이 있다고 생각하고, 그 원 내부에 정삼각형을 그리는데, 이때의 크기가 100%, 캔버스 y축과 삼각형의 첫 꼭짓점 사이의 각도: 40도
+      // 하지만 그러면 약간 치우쳐서 보정해줌
+      const ctx = document.getElementById('c').getContext('2d')
+      const width = parseInt(document.getElementById('size').value)
+      const triangleSize = parseInt(document.getElementById('triangleSize').value)
+      document.getElementById('c').width = width
+      document.getElementById('c').height = width
+      ctx.fillStyle = document.getElementById('bg').value
+      ctx.fillRect(0, 0, width, width)
+      const r = 1 / 2 * width * triangleSize / 100
+      const bojungX = 0.05; const bojungY = -0.025
+      ctx.lineCap = 'round'
+      ctx.moveTo((1 / 2 + bojungX) * width + r * Math.cos(50 * Math.PI / 180), (1 / 2 + bojungY) * width - r * Math.sin(50 * Math.PI / 180))
+      ctx.lineTo((1 / 2 + bojungX) * width + r * Math.cos(70 * Math.PI / 180), (1 / 2 + bojungY) * width + r * Math.sin(70 * Math.PI / 180))
+      ctx.moveTo((1 / 2 + bojungX) * width + r * Math.cos(70 * Math.PI / 180), (1 / 2 + bojungY) * width + r * Math.sin(70 * Math.PI / 180))
+      ctx.lineTo((1 / 2 + bojungX) * width - r * Math.sin(80 * Math.PI / 180), (1 / 2 + bojungY) * width - r * Math.cos(80 * Math.PI / 180))
+      ctx.moveTo((1 / 2 + bojungX) * width - r * Math.sin(80 * Math.PI / 180), (1 / 2 + bojungY) * width - r * Math.cos(80 * Math.PI / 180))
+      ctx.lineTo((1 / 2 + bojungX) * width + r * Math.cos(50 * Math.PI / 180), (1 / 2 + bojungY) * width - r * Math.sin(50 * Math.PI / 180))
       ctx.lineWidth = 10
       ctx.strokeStyle = document.getElementById('color').value
       ctx.stroke()
     }
-    function save(){
-      let link = document.createElement('a')
+
+    function save () {
+      const link = document.createElement('a')
       link.download = 'SeoaLogo.png'
       link.href = document.getElementById('c').toDataURL()
       link.click()
@@ -45,13 +48,13 @@
 </head>
 <body>
   팀 서아의 로고를 원하는 색으로 그려줍니다. 뭐 팀원들 로고 필요할떄 쓰라고 만드는거라 디자인은 안해요.<br>
-  디자인 불편하면 직접해서 pr넣으시면됨(?) <a href='https://github.com/SeoaV2/SeoaLogos'>레포링크</a><br>
-  background-color(hex):<input type="text" id='bg' class='prop' value='#000000'>
-  color(hex):<input type="text" id='color' class='prop' value='#ffffff'><br>
-  triangle size(%):<input type="text" id='triangleSize' class='prop' value='100'><br>
-  image size(px):<input type="text" id='size' class='prop' value='400'><br>
+  디자인 불편하면 직접해서 pr넣으시면됨(?) <a href="https://github.com/SeoaV2/SeoaLogos">레포링크</a><br>
+  background-color(hex):<input type="text" id="bg" class="prop" value="#000000">
+  color(hex):<input type="text" id="color" class="prop" value="#ffffff"><br>
+  triangle size(%):<input type="text" id="triangleSize" class="prop" value="100"><br>
+  image size(px):<input type="text" id="size" class="prop" value="400"><br>
   preview<br>
-  <canvas id='c' width='400' height='400' style='border:1px solid black'>아 언제적 브라우저;;;</canvas>
-  <br><button onclick='save()'>다운로드</button>
+  <canvas id="c" width="400" height="400" style="border:1px solid black">아 언제적 브라우저;;;</canvas>
+  <br><button id="save">다운로드</button>
 </body>
 </html>
