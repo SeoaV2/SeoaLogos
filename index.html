@@ -18,6 +18,7 @@
       let width=parseInt(document.getElementById('size').value)
       let triangleSize=parseInt(document.getElementById('triangleSize').value)
       document.getElementById('c').width=width
+      document.getElementById('c').height=width
       ctx.fillStyle=document.getElementById('bg').value
       ctx.fillRect(0,0,width,width)
       let r = 1/2*width*triangleSize/100
