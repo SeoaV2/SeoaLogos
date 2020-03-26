@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://js.zapjs.com/js/download.js"></script>
+  <script>
+    
+    window.onload = () => {
+      const color = document.getElementById('color')
+      const invert = document.getElementById('invert')
+      const colorC = document.getElementById('colorC')
+      const invertC = document.getElementById('invertC')
+      const canvas = document.getElementById('c')
+      const ctx = canvas.getContext('2d');
+      const image = document.getElementById('source');
+      color.addEventListener('input', render)
+      invert.addEventListener('input', render)
+      ctx.drawImage(image, 0, 0, 400, 400);
+
+      function render () {
+        colorC.innerText = color.value
+        invertC.innerText = invert.value
+        ctx.filter = 'invert(' + invert.value + '%) ' + 'hue-rotate(' + color.value + 'deg) ' ;
+        ctx.drawImage(image, 0, 0, 400, 400);
+        ctx.filter = 'none'
+      }
+    }
+
+
+  </script>
+  <title>SeoaLogo</title>
+</head>
+<body>
+  <h1>
+    SeoaLogo v2
+  </h1>
+
+  팀 서아의 로고를 원하는 색으로 그려줍니다. 뭐 팀원들 로고 필요할떄 쓰라고 만드는거라 디자인은 안해요.<br>
+  디자인 불편하면 직접해서 pr넣으시면됨(?) <a href="https://github.com/SeoaV2/SeoaLogos">레포링크</a><hr>
+  color-rotation: <input type="range" id="color" value="0" max="360"> <span id="colorC">0</span>deg / 360deg<br />
+  invert: <input type="range" id="invert" value="0" max="100"> <span id="invertC">0</span>% / 100%<hr />
+  <canvas id="c" width="400" height="400" style="border:1px solid black">아 언제적 브라우저;;;</canvas><br />
+  <button onclick="download(document.getElementById('c').toDataURL(), 'SeoaV2-Logo-Custom.png', 'application/octet-stream;base64');">Download</button>
+
+  <img id="source"
+  src="/Simple.png"
+  width="400" height="400" style="display: none;">
+</body>
+</html>
